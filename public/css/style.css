@@ -1,0 +1,82 @@
+banner{
+  font-size:16px;
+  margin-bottom:0px;
+  /*diplay:block;*/
+  background:white;
+}
+.btn-width{
+  width:100px
+}
+.padding{
+  padding:20px;
+}
+.center{
+  text-align:center;
+}
+a:active{
+  color:white;
+}
+.item-img{
+  border-radius:20px;
+  margin:10px;
+}
+.item-text{
+  margin:10px;
+}
+.item-btn{
+  margin:10px;
+  background:rgb(110, 59, 154);
+  border-color:white;
+  color:white;
+}
+
+.item{
+  margin-top:15px;
+  margin-left:10px;
+  text-align:left;
+}
+.item:hover{
+  background:rgb(110, 59, 154);
+  border:rgb(80, 29, 124);
+  border-top:rgb(170, 119, 214);
+  border-style:solid;
+  border-width:5px;
+  border-radius:25px;
+}
+a,a:link{
+  color:white;
+}
+a:hover{
+  color:white;
+}
+.content{
+  background:rgb(110, 59, 154);
+  color:white;
+  font-family: 'Roboto Slab', serif;
+padding-top:0px;
+}
+.btn-go:hover{
+color:white;
+}
+.btn-go{
+  background:rgb(110, 59, 154);
+  color:white;
+  border-color:white;
+  margin-top:10px;
+  width:90%;
+}
+.input-go{
+  background:rgb(110, 59, 154);
+  margin-left:10px;
+  margin-top:10px;
+  color:white;
+}
+.half-width{
+  width:60%;
+  margin:auto;
+}
+.title-img{
+  margin-top:10px;
+  margin-right:10px;
+}
+

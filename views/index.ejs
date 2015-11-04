@@ -1,0 +1,146 @@
+<!doctype html>
+<html>
+<head>
+    <title>What's going on tonight?</title>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab">
+    <link rel="stylesheet" href="/css/style.css">
+
+    <style>
+        body         { padding-top:80px; }
+    </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script type="text/javascript">  
+$(document).ready(function(){
+/*
+	$("#inputEntry").hover(function () {
+        $(this).focus(); // to focus
+    }, function () {
+        $(this).blur().val('');  //to remove focus (blur)
+    });
+*/
+<% if(searchtext.length>0){%>
+$('#inputEntry').val("<%= searchtext %>");
+setTimeout(function(){
+$('#gobutton').trigger("click");
+},10);
+	      
+<%}%>
+	$('#inputEntry').keypress(function(e) {
+	    if(e.which == 13) {
+	      $('#gobutton').click();
+	    }
+	});
+                   $('#gobutton').click(function(){                            
+                       var str = {};  
+                       str.location= $("#inputEntry").val();  
+			$('#list').html('<i class="fa fa-spinner fa-pulse fa-5x" style="margin-top:10px"></i>');
+                       $.post("/",str,function(data){  
+                                greet(data.places,data.golist);
+                             });  
+                      });  
+                             
+                    var greet = function(places,golist){  
+                           $('#list').html("");  
+var html="";
+ for(var i=0;i<places.length;i++){ 
+html='';
+    html+='<div class="row item">';
+    html+='  <div class="col-xs-2">';
+if(places[i].image_url!=undefined){
+html+='        <img class="item-img" src="'+places[i].image_url+'"/>';
+}
+html+='</div>';
+html+='      <div class="col-xs-10">';
+html+='        <div class="row">';
+html+='          <div class="col-xs-2 item-text">';
+html+=places[i].name;
+html+='          </div>';
+html+='          <div class="col-xs-2">';
+html+='        <button id="gobutton'+i+'" class="form-control item-btn" type="button">'+golist[i]+'</button>';
+html+='          </div>';
+html+='        </div>';
+html+='        <p style="font-style:italic">"';
+if(places[i].snippet_text!=undefined){
+html+=places[i].snippet_text;
+}
+html+='"</p>';
+html+='      </div>';
+html+='    </div>';
+                           $('#list').append(html);  
+}
+html='<script>';
+html+='$("button").click(function(){';
+html+='        var str = {};  ';
+html+='        var id= "";  ';
+html+='		console.log($(this));';
+html+='		console.log($(this)[0].id);';
+html+='		id=$(this)[0].id;';
+html+='        str.buttonid= id;  ';
+html+='        str.index=$(this)[0].id.replace("gobutton","") ;  ';
+html+='        str.place= $(this).parent().prev().text().trim();  ';
+html+='	str.go=($(this).text()!="0 GOING");';
+html+='        $.post("/",str,function(data){  ';
+html+='		if(data.text=="guest"){';
+//html+='		alert("-tw-");';
+html+='		window.location.href="/auth/twitter";';
+html+='		}else{';
+//html+='		alert("-"+data.buttonid+"-");';
+html+='		console.log($(this));';
+html+='		$("#"+data.buttonid).text(data.text);';
+//html+='		alert($("#"+data.buttonid).text());';
+html+='		}';
+html+='        });  ';
+html+='});  ';
+html+='<\/script>';
+                           $('#list').append(html);  
+                      };         
+                });        
+            </script>   
+</head>
+<body>
+<body class="content">
+<div class="center">
+  <div class="row banner">
+    <div class="col-xs-1">
+
+    </div>
+<!--
+    <div class="col-xs-1 padding center btn-width" id="home">
+      <a href="#">Home</a>
+    </div>
+　-->
+    <div class="col-xs-9">
+    </div>
+    <div class="col-xs-2 padding center btn-width" id="login" style="width:16%">
+<% if(username.length>0){ %>
+      Hello <%= username %>
+<% }else{ %>
+      <a href="/auth/twitter" id="linkTwitter">Connect with Twitter</a>
+<%}%>
+    </div>
+  </div>
+  <h1>Plans tonight?</h1>
+      <i class="fa fa-map-marker fa-3x title-img"></i>
+  <i class="fa fa-qq fa-3x title-img"></i>
+  <i class="fa fa-glass fa-3x title-img"></i>
+  <i class="fa fa-fighter-jet fa-3x title-img"></i>
+  <h4 class="half-width">See which bars are hoppin' tonight and RSVP ahead of time!</br>
+    Remember: take a cab and drink responsibly.</h4>
+  <div class="row">
+<div id="searchbox">
+    <div class="col-xs-10">
+      <input id="inputEntry" type="text" name="search" class="form-control input-go" placeholder="WHERE YOU AT?"/></div>
+    <div class="col-xs-2"><input type="submit" id="gobutton" class="btn btn-go" value="GO"/>
+</div>
+    </div>
+  </div>
+  <div id="list">
+  </div>
+  <div id="footer">
+    <a href="https://twitter.com/zoga9">@perrot</a> | <a href="https://twitter.com/zoga9">GitHub</a>
+</div>
+</div>
+</body>
+</html>
